@@ -1,11 +1,16 @@
 from name import Name
 from phone import Phone
+from birthday import Birthday
 
 
 class Record:
     def __init__(self, name: str):
         self.name = Name(name)
         self.phones: list[Phone] = []
+        self.birthday = None
+
+    def add_birthday(self, value: str):
+        self.birthday = Birthday(value)
 
     def find_phone(self, value: str) -> Phone | None:
         result = [item for item in self.phones if item.value == value]
@@ -30,7 +35,8 @@ class Record:
         self.remove_phone(old_value)
 
     def __str__(self):
-        return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
+        birthday_str = f"; birthday: {self.birthday}" if self.birthday else ""
+        return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}{birthday_str}"
 
 
 if __name__ == "__main__":

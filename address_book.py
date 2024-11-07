@@ -1,6 +1,9 @@
+from datetime import datetime, timedelta
+
 from collections import UserDict
 
 from record import Record
+from constants import FRIDAY, WEEK, DATE_FORMAT
 
 
 class AddressBook(UserDict[str, Record]):
@@ -20,6 +23,29 @@ class AddressBook(UserDict[str, Record]):
             )
 
         self.data[record.name.value] = record
+
+    def get_upcoming_birthdays(self):
+        congratulation_dates: dict[str, str] = {}
+        today = datetime.today().date()
+        for record in self.data.values():
+            birthday = record.birthday
+            if birthday is None:
+                break
+            congratulation_date = birthday.value.replace(year=today.year).date()
+            dif = (congratulation_date - today).days
+
+            if 0 <= dif < WEEK:
+                weekday = congratulation_date.isoweekday()
+                # check if this year birthday is at the weekend
+                if FRIDAY < weekday:
+                    days_to_monday = timedelta(days=(WEEK - weekday + 1))
+                    congratulation_date += days_to_monday
+
+                congratulation_dates[record.name.value] = congratulation_date.strftime(
+                    DATE_FORMAT
+                )
+
+        return congratulation_dates
 
     def delete(self, name: str):
         if name in self.data:
