@@ -18,8 +18,10 @@ def add_record(args: list, book: AddressBook) -> str:
         case _:
             raise IndexError
 
-    if book.find(name):
-        raise Exception("Name already in the list")
+    record = book.find(name)
+    if record is not None:
+        record.add_phone(phone)
+        return "Contact changed"
 
     new_record = Record(name)
     new_record.add_phone(phone)

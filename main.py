@@ -6,7 +6,6 @@ from commands import (
     show_all,
     add_birthday,
     show_birthday,
-    add_phone,
     birthdays,
     delete,
 )
@@ -32,9 +31,7 @@ def main():
                 print("Hello!")
             case ["add", *args]:
                 print(add_record(args, book))
-            case ["add-phone", *args]:
-                print(add_phone(args, book))
-            case ["change-phone", *args]:
+            case ["change", *args]:
                 print(change_phone(args, book))
             case ["phone", *args]:
                 print(show_phone(args, book))

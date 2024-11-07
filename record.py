@@ -19,7 +19,7 @@ class Record:
     def add_phone(self, value: str):
         phone = self.find_phone(value)
         if phone is not None:
-            raise ValueError(f"Phone number '{value}' already exists in the record")
+            raise Exception(f"Phone number '{value}' already exists in the record")
         self.phones.append(Phone(value))
 
     def remove_phone(self, value: str):
